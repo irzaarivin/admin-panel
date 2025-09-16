@@ -16,6 +16,32 @@ module.exports = async ({ User }) => {
             }
         },
 
+        getUserStats: async () => {
+            try {
+                const activeCount = await User.count({ where: { status: 'active' } })
+                const inactiveCount = await User.count({ where: { status: 'inactive' } })
+                const total = activeCount + inactiveCount
+
+                return { activeCount, inactiveCount, total }
+            } catch (error) {
+                throw error
+            }
+        },
+
+        getLatestUsers: async (limit) => {
+            try {
+                const users = await User.findAll({
+                    order: [['createdAt', 'DESC']],
+                    limit: limit || 5,
+                    attributes: { exclude: ['password'] }
+                })
+
+                return users
+            } catch (error) {
+                throw error
+            }
+        },
+
         getOneUser: async (param) => {
             try {
                 const user = await User.findOne({

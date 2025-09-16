@@ -1,11 +1,20 @@
 module.exports = async (userHandler) => {
 
-    const { getUsers, getUserById, updateUser, deleteUser } = await userHandler
+    const { getUsers, getUsersStats, getUserById, updateUser, deleteUser } = await userHandler
 
     const get = async (req, res, next) => {
         try {
             const params = req.query
             const result = await getUsers(params)
+            res.status(result.statusCode).json(result.data)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    const getStats = async (req, res, next) => {
+        try {
+            const result = await getUsersStats()
             res.status(result.statusCode).json(result.data)
         } catch (err) {
             next(err)
@@ -43,6 +52,6 @@ module.exports = async (userHandler) => {
         }
     }
 
-    return { get, getById, update, ddelete }
+    return { get, getStats, getById, update, ddelete }
 
 }
