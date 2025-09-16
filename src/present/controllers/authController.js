@@ -2,7 +2,7 @@ module.exports = async ({ register, login }) => {
   const registerUser = async (req, res, next) => {
     try {
       const result = await register(req.body)
-      res.json(result)
+      res.status(result.statusCode).json(result.data)
     } catch (err) {
       next(err)
     }

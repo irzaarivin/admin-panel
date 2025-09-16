@@ -46,29 +46,27 @@ const validate = async (data) => {
     }),
   })
 
-  const { error } = schema.validate(data)
+  const { error } = schema.validate(data, { abortEarly: false })
   return error
 }
 
 module.exports = async (repositories, helpers, emitSocketEvent, data) => {
+  const { response } = helpers
   const { createUser } = repositories.userRepositories
 
   const validation = await validate(data)
-  if (validation) return { status: "Failed", error: validation }
+  if (validation) return response.invalidData(validation)
 
   data.password = await bcrypt.hash(data.password, 10)
   const user = await createUser(data)
 
-  return {
-    status: 'success',
-    user: {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-      createdAt: user.createdAt,
-    }
-  }
+  return response.success({
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    status: user.status,
+    createdAt: user.createdAt,
+  })
 }
