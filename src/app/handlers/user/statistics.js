@@ -1,4 +1,3 @@
-// src/app/handlers/user/getUserSummary.js
 module.exports = async (repositories, helpers) => {
   const { response } = helpers
   const { getUserStats, getLatestUsers } = repositories.userRepositories
