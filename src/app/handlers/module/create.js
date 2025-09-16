@@ -16,13 +16,13 @@ const validate = async (data) => {
 
 module.exports = async (repositories, helpers, data) => {
   const { response } = helpers
-  const { createModule } = repositories.moduleRepositories
+  const { create } = repositories.moduleRepositories
 
   const validation = await validate(data)
   if (validation) return response.invalidData(validation)
 
-  data.password = await bcrypt.hash(data.password, 10)
-  const createdModule = await createModule(data)
+  const createdModule = await create(data)
 
-  return response.success(createdModule)
+  if (createdModule) return response.success(createdModule)
+  return response.serverError(createdModule)
 }

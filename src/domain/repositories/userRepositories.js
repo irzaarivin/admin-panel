@@ -55,7 +55,8 @@ module.exports = async ({ User }) => {
             }
         },
 
-        updateUser: async (id, data) => {
+        // ======= DEPRECATED =======
+        updateUser__DEPRECATED: async (id, data) => {
             try {
                 const [affectedCount, affectedRows] = await User.update(data, {
                     where: { id },
@@ -67,6 +68,19 @@ module.exports = async ({ User }) => {
             } catch (error) {
                 console.error(error);
                 throw new Error(error);
+            }
+        },
+        // ==========================
+
+        updateUser: async (id, data) => {
+            try {
+                const user = await User.findByPk(id)
+                await user.update(data)
+
+                return user
+            } catch (error) {
+                console.error(error);
+                throw Error(error);
             }
         },
 
