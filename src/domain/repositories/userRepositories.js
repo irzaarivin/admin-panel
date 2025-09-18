@@ -81,6 +81,15 @@ module.exports = async ({ User }) => {
             }
         },
 
+        bulkInsert: async (data) => {
+            try {
+                const inserted = await User.bulkCreate(data, { returning: true })
+                return inserted
+            } catch (error) {
+                throw error
+            }
+        },
+
         // ======= DEPRECATED =======
         updateUser__DEPRECATED: async (id, data) => {
             try {
