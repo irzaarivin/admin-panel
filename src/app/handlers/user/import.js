@@ -41,13 +41,10 @@ module.exports = async (repositories, helpers, file) => {
 
     const inserted = await bulkInsert(users)
 
-    return response.success({
-      message: `${inserted.length} user berhasil diimport`,
-      data: inserted.map(user => {
-        const { password, ...sanitized } = user.toJSON ? user.toJSON() : user
-        return sanitized
-      })
-    })
+    return response.success(inserted.map(user => {
+      const { password, ...sanitized } = user.toJSON ? user.toJSON() : user
+      return sanitized
+    }))
   } catch (error) {
     return response.invalidData(error.message)
   }

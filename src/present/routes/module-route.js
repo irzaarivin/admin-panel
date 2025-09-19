@@ -4,10 +4,10 @@ const multer = require('multer')
 const moduleRoutes = express.Router()
 const upload = multer({ dest: 'uploads/imports/modules/' })
 
-module.exports = async (moduleController, AuthChecker) => {
+module.exports = async (moduleController, { AuthChecker, RoleChecker: AllowedRole }) => {
     moduleRoutes.use(AuthChecker)
 
-    moduleRoutes.post('/', moduleController.create)
+    moduleRoutes.post('/', AllowedRole('administrator', 'instructor'), moduleController.create)
     moduleRoutes.get('/', moduleController.getAll)
     moduleRoutes.put('/:id', moduleController.update)
     moduleRoutes.delete('/:id', moduleController.deleteOne)

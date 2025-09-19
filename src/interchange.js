@@ -5,6 +5,7 @@ const { routes, socket } = require('./present/routes/index')
 const middlewares = {
     ErrorHandler: require('./present/middlewares/ErrorHandler'),
     AuthChecker: require('./present/middlewares/AuthChecker'),
+    RoleChecker: require('./present/middlewares/RoleChecker'),
     SocketChecker: require('./present/middlewares/SocketAuth')
 }
 

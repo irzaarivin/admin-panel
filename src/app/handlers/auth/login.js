@@ -40,6 +40,6 @@ module.exports = async (repositories, helpers, emitSocketEvent, data) => {
   const valid = await bcrypt.compare(password, user.password)
   if (!valid) return response.unauthorized("Kredensial tidak valid!")
 
-  const token = generateToken({ id: user.id, email: user.email })
+  const token = generateToken({ id: user.id, email: user.email, role: user.role })
   return response.success({ token })
 }

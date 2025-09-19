@@ -5,15 +5,31 @@ module.exports = async (req, res, next) => {
     const authHeader = req.headers.authorization
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Unauthorized' })
+      return res.status(401).json({
+        status: 'failed',
+        message: 'Missing or invalid Authorization header',
+      })
     }
 
     const token = authHeader.split(' ')[1]
-    const decoded = verifyToken(token)
+
+    let decoded
+    try {
+      decoded = verifyToken(token)
+    } catch (err) {
+      return res.status(401).json({
+        status: 'failed',
+        message: 'Invalid or expired token',
+      })
+    }
 
     req.user = decoded
     next()
   } catch (err) {
-    return res.status(401).json({ error: 'Invalid token' })
+    return res.status(500).json({
+      status: 'failed',
+      message: 'Internal server error in AuthChecker',
+      error: err.message,
+    })
   }
 }

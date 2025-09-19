@@ -5,12 +5,12 @@ const moduleRoutes = require('./module-route');
 
 const routes = async (app, controllers, middlewares) => {
   const { usersController, authController, moduleController } = await controllers
-  const { ErrorHandler, AuthChecker } = middlewares
+  const { ErrorHandler, AuthChecker, RoleChecker } = middlewares
   
   app.use(await ErrorHandler)
 
   app.use('/user', await userRoutes(usersController, AuthChecker));
-  app.use('/module', await moduleRoutes(moduleController, AuthChecker));
+  app.use('/module', await moduleRoutes(moduleController, { AuthChecker, RoleChecker }));
   app.use('/auth', await authRoutes(authController));
 
   return app;
