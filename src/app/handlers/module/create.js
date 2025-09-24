@@ -1,5 +1,4 @@
 const Joi = require('joi')
-const bcrypt = require('bcrypt')
 
 const validate = async (data) => {
   const schema = Joi.object({
@@ -15,14 +14,21 @@ const validate = async (data) => {
 }
 
 module.exports = async (repositories, helpers, data) => {
-  const { response } = helpers
-  const { create } = repositories.moduleRepositories
+  try {
+    const { response } = helpers
+    const { create, getOne } = repositories.moduleRepositories
 
-  const validation = await validate(data)
-  if (validation) return response.invalidData(validation)
+    const validation = await validate(data)
+    if (validation) return response.invalidData(validation)
 
-  const createdModule = await create(data)
+    const sameModule = await getOne({ title: data.title })
+    if (sameModule) return response.conflict("Module sudah digunakan")
 
-  if (createdModule) return response.success(createdModule)
-  return response.serverError(createdModule)
+    const createdModule = await create(data)
+
+    if (createdModule) return response.success(createdModule)
+    return response.serverError(createdModule)
+  } catch(error) {
+    throw Error(error)
+  }
 }

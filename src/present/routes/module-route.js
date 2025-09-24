@@ -1,17 +1,21 @@
 const express = require('express')
 const multer = require('multer')
-
-const moduleRoutes = express.Router()
 const upload = multer({ dest: 'uploads/imports/modules/' })
 
 module.exports = async (moduleController, { AuthChecker, RoleChecker: AllowedRole }) => {
-    moduleRoutes.use(AuthChecker)
+    const moduleRoutes = express.Router()
+    const RoleProtectModuleRoutes = express.Router()
 
-    moduleRoutes.post('/', AllowedRole('administrator', 'instructor'), moduleController.create)
+    moduleRoutes.use(AuthChecker)
     moduleRoutes.get('/', moduleController.getAll)
-    moduleRoutes.put('/:id', moduleController.update)
-    moduleRoutes.delete('/:id', moduleController.deleteOne)
-    moduleRoutes.post('/import', upload.single('file'), moduleController.imports)
+
+    RoleProtectModuleRoutes.use(AuthChecker, AllowedRole('administrator', 'instructor'))
+    RoleProtectModuleRoutes.post('/', moduleController.create)
+    RoleProtectModuleRoutes.put('/:id', moduleController.update)
+    RoleProtectModuleRoutes.delete('/:id', moduleController.deleteOne)
+    RoleProtectModuleRoutes.post('/import', upload.single('file'), moduleController.imports)
+
+    moduleRoutes.use(RoleProtectModuleRoutes)
 
     return moduleRoutes
-};
+}

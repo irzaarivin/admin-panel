@@ -60,7 +60,7 @@ module.exports = async (repositories, helpers, params) => {
 
   if (username) {
     const duplicate = await getOneUser({ username })
-    if (duplicate && duplicate.id !== id) {
+    if (duplicate && duplicate.id != id) {
       return response.conflict("Username sudah digunakan user lain")
     }
   }

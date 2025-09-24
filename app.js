@@ -31,7 +31,7 @@
 
 
     // DATABASE CONFIG
-    const { Sequelize, sequelize, mongoose, mongooseConnection } = require('./src/infrastructure/config/database')
+    const { sequelize, Sequelize, mongoose, redis } = require('./src/infrastructure/databases/index')
 
     // SOURCE FILE CONFIG
     const { model, repository, handler, controller, middlewares, helpers, routes, socket } = require('./src/interchange')

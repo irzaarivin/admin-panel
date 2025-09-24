@@ -51,16 +51,16 @@ const validate = async (data) => {
 }
 
 module.exports = async (repositories, helpers, emitSocketEvent, data) => {
-  const { response } = helpers
+  const { success, invalidData } = helpers.response
   const { createUser } = repositories.userRepositories
 
   const validation = await validate(data)
-  if (validation) return response.invalidData(validation)
+  if (validation) return invalidData(validation)
 
   data.password = await bcrypt.hash(data.password, 10)
   const user = await createUser(data)
 
-  return response.success({
+  return success({
     id: user.id,
     name: user.name,
     username: user.username,

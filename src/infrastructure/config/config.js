@@ -1,4 +1,3 @@
-// require('dotenv').config({ path: '../../.env' });
 require('dotenv').config({path:__dirname+'/./../../../.env'});
 
 module.exports = {
@@ -13,6 +12,8 @@ module.exports = {
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 3306,
     dialect: process.env.DB_DIALECT || 'mysql',
+    mongo_port: process.env.MONGO_PORT || 27017,
+    redis_port: process.env.REDIS_PORT || 6379,
   },
   test: {
     username: process.env.DB_USER || 'root',
