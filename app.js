@@ -37,13 +37,13 @@
     const { model, repository, handler, controller, middlewares, helpers, routes, socket } = require('./src/interchange')
 
     // MODELS
-    const models = await model(Sequelize, sequelize, mongoose)
+    const models = await model({ Sequelize, sequelize, mongoose })
 
     // REPOSITORIES
     const repositories = await repository(models)
 
     // HANDLERS
-    const handlers = await handler(repositories, helpers, emitSocketEvent)
+    const handlers = await handler({ repositories, helpers, emitSocketEvent, redis })
 
     // CONTROLLERS
     const controllers = await controller(handlers)

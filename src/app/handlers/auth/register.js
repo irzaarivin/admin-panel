@@ -51,11 +51,19 @@ const validate = async (data) => {
 }
 
 module.exports = async (repositories, helpers, emitSocketEvent, data) => {
-  const { success, invalidData } = helpers.response
-  const { createUser } = repositories.userRepositories
+  const { success, invalidData, conflict } = helpers.response
+  const { createUser, getOneUser } = repositories.userRepositories
 
   const validation = await validate(data)
   if (validation) return invalidData(validation)
+
+  const [usernameConflict, emailConflict] = await Promise.all([
+    getOneUser({ username: data.username }),
+    getOneUser({ email: data.email })
+  ]);
+
+  if (usernameConflict) return conflict("Username has been taken");
+  if (emailConflict) return conflict("Email has been taken");
 
   data.password = await bcrypt.hash(data.password, 10)
   const user = await createUser(data)

@@ -16,7 +16,7 @@ const helpers = {
 
 // ======================================================================== //
 
-const model = async (Sequelize, sequelize, mongoose) => {
+const model = async ({ Sequelize, sequelize, mongoose }) => {
     const User = require('./domain/models/User')
     const Module = require('./domain/models/Module')
 
@@ -40,7 +40,7 @@ const repository = async (models) => {
 
 // ======================================================================== //
 
-const handler = async (repositories, helpers, emitSocketEvent) => {
+const handler = async ({ repositories, helpers, emitSocketEvent, redis }) => {
     const users = require('./app/handlers/user/index')
     const socket = require('./app/handlers/socket/index')
     const auth = require('./app/handlers/auth/index')
