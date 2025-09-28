@@ -1,11 +1,12 @@
-module.exports = async (Sequelize, sequelize) => {
-  return await sequelize.define('users', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: Sequelize.INTEGER
-    },
+'use strict';
+
+module.exports = async ({ sequelize, Sequelize, Model, DataTypes }) => {
+  class User extends Model {
+    static associate(models) {
+      // Associate here
+    }
+  }
+  await User.init({
     name: {
       type: Sequelize.STRING,
       allowNull: false
@@ -34,15 +35,11 @@ module.exports = async (Sequelize, sequelize) => {
       defaultValue: 'active',
       allowNull: false,
     },
-    createdAt: {
-      allowNull: false,
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
-    },
-    updatedAt: {
-      allowNull: false,
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
-    }
-  })
-}
+  }, {
+    sequelize,
+    modelName: 'User',
+    tableName: 'users',
+    timestamps: true
+  });
+  return User;
+};

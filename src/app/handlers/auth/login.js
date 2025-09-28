@@ -5,16 +5,17 @@ const { generateToken } = require('../../utils/jwt')
 const validate = async (data) => {
   const schema = Joi.object({
     email: Joi.string().email({ tlds: { allow: false } }).messages({
+      'string.empty': 'Password tidak boleh kosong!',
       'string.email': 'Format email tidak valid!',
     }),
 
     username: Joi.string().min(3).messages({
+      'string.empty': 'Username tidak boleh kosong!',
       'string.min': 'Username minimal harus 3 karakter!',
     }),
 
-    password: Joi.string().min(6).required().messages({
+    password: Joi.string().required().messages({
       'string.empty': 'Password tidak boleh kosong!',
-      'string.min': 'Password minimal harus 6 karakter!',
       'any.required': 'Password diperlukan!'
     })
   }).or('email', 'username').messages({
@@ -41,5 +42,17 @@ module.exports = async (repositories, helpers, emitSocketEvent, data) => {
   if (!valid) return response.unauthorized("Kredensial tidak valid!")
 
   const token = generateToken({ id: user.id, email: user.email, role: user.role })
-  return response.success({ token })
+  if (!token) return response.serverError("Gagal menghasilkan token!")
+
+  const plainUser = user.toJSON()
+  delete plainUser.password
+  return response.success({
+    user: {
+      username: plainUser.username,
+      name: plainUser.name,
+      role: plainUser.role,
+      status: plainUser.status,
+    },
+    token,
+  }, "Login berhasil!")
 }

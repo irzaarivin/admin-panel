@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize')
+const { Sequelize, Model, DataTypes } = require('sequelize')
 
 module.exports = (config) => {
     try {
@@ -9,8 +9,8 @@ module.exports = (config) => {
             logging: config.environment === 'development' ? console.log : false,
         })
 
-        if (sequelize) console.log('MySQL Connected')
-        return { sequelize, Sequelize }
+        console.log('MySQL Connected')
+        return { sequelize, Sequelize, Model, DataTypes }
     } catch(error) {
         console.error('MySQL connection error : ', error)
         throw Error(error)

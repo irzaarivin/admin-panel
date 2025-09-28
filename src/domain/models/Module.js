@@ -1,25 +1,25 @@
-module.exports = async (Sequelize, sequelize) => {
-  return await sequelize.define('modules', {
-    id: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true
-    },
+'use strict';
+
+module.exports = async ({ sequelize, Sequelize, Model, DataTypes }) => {
+  class Module extends Model {
+    static associate(models) {
+      Module.hasMany(models.SubModule, {
+        foreignKey: 'module_id',
+        as: 'Subodule'
+      });
+    }
+  }
+  await Module.init({
     title: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
-    },
-    createdAt: {
-      allowNull: false,
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
-    },
-    updatedAt: {
-      allowNull: false,
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
     }
-  })
-}
+  }, {
+    sequelize,
+    modelName: 'Module',
+    tableName: 'modules',
+    timestamps: true
+  });
+  return Module;
+};

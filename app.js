@@ -24,6 +24,8 @@
     app.use(cors({ origin: config.origin }))
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
+    app.use(express.json());
+
 
 
     // ======================================================================== //
@@ -31,13 +33,13 @@
 
 
     // DATABASE CONFIG
-    const { sequelize, Sequelize, mongoose, redis } = require('./src/infrastructure/databases/index')
+    const { sequelize, Sequelize, Model, DataTypes, mongoose, redis } = require('./src/infrastructure/databases/index')
 
     // SOURCE FILE CONFIG
     const { model, repository, handler, controller, middlewares, helpers, routes, socket } = require('./src/interchange')
 
     // MODELS
-    const models = await model({ Sequelize, sequelize, mongoose })
+    const models = await model({ Sequelize, sequelize, Model, DataTypes, mongoose })
 
     // REPOSITORIES
     const repositories = await repository(models)
