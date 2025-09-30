@@ -5,6 +5,7 @@ module.exports = async (contentController, AuthChecker) => {
     contentRoutes.use(AuthChecker)
 
     contentRoutes.post('/', contentController.create)
+    contentRoutes.get('/', contentController.get)
 
     return contentRoutes
 };

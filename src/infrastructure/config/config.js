@@ -18,8 +18,8 @@ module.exports = {
     mongo_host: process.env.MONGO_HOST || 'localhost',
     mongo_port: process.env.MONGO_PORT || 27017,
     mongo_database: process.env.MONGO_DB || 'vrbnnode',
-    mongo_user: process.env.MONGO_USER || '',
-    mongo_pass: process.env.MONGO_PASS || '',
+    mongo_user: process.env.MONGO_USER || 'irzaarivin',
+    mongo_pass: process.env.MONGO_PASS || 'irzaarivin',
     mongo_authSource: process.env.MONGO_AUTHSOURCE || 'admin',
 
     // Redis

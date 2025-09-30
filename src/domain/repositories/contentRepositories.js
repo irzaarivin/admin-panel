@@ -1,7 +1,7 @@
 module.exports = async ({ Content }) => {
   return {
-    findAll: async (filter = {}) => {
-      return Content.find(filter).sort({ createdAt: -1 });
+    findAll: async () => {
+      return await Content.find().lean()
     },
 
     findById: async (id) => {

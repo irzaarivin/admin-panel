@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "bin": {
+    "tolongin": "./bin/tolongin.js"
+  },
   "scripts": {
     "dev": "nodemon app",
     "test": "nodemon --inspect --exitcrash app",
