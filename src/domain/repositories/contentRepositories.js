@@ -4,21 +4,18 @@ module.exports = async ({ Content }) => {
       return await Content.find().lean()
     },
 
-    findById: async (id) => {
-      return Content.findById(id);
-    },
-
     create: async (data) => {
       const content = new Content(data);
       return content.save();
     },
 
-    update: async (id, data) => {
-      return Content.findByIdAndUpdate(id, data, { new: true });
+    updateById: async ({ id, payload }) => {
+      const updated = await Content.findByIdAndUpdate(id, payload, { new: true })
+      return updated
     },
 
-    delete: async (id) => {
-      return Content.findByIdAndDelete(id);
+    getById: async (id) => {
+      return await Content.findById(id)
     }
   }
 }

@@ -11,7 +11,8 @@ const middlewares = {
 
 const helpers = {
     email: require('./app/helpers/email'),
-    response: require('./app/helpers/response')
+    response: require('./app/helpers/response'),
+    minio: require('./app/helpers/minio')
 }
 
 // ======================================================================== //

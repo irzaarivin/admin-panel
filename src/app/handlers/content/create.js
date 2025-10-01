@@ -15,29 +15,18 @@ const validate = async (data) => {
       'string.empty': 'PDF tidak boleh kosong!',
       'any.required': 'PDF diperlukan!'
     }),
-    steps: Joi.array().items(
-      Joi.object({
-        order: Joi.number().required().messages({
-          'number.base': 'Order harus angka!',
-          'any.required': 'Order diperlukan!'
-        }),
-        action: Joi.string().required().messages({
-          'string.empty': 'Action tidak boleh kosong!',
-          'any.required': 'Action diperlukan!'
-        }),
-        expected: Joi.string().required().messages({
-          'string.empty': 'Expected tidak boleh kosong!',
-          'any.required': 'Expected diperlukan!'
-        }),
-      })
-    ).min(1).required().messages({
-      'array.base': 'Steps harus berupa array!',
-      'array.min': 'Steps minimal 1!',
-      'any.required': 'Steps diperlukan!'
+    assetBundle: Joi.string().required().messages({
+      'string.empty': 'Title tidak boleh kosong!',
+      'string.min': 'Title minimal harus 3 karakter!',
+      'any.required': 'Title diperlukan!'
     }),
     subModule: Joi.number().required().messages({
       'number.base': 'SubModule ID harus berupa angka!',
       'any.required': 'SubModule diperlukan!'
+    }),
+    scenario: Joi.object().required().messages({
+      'object.base': 'Scenario harus berupa object!',
+      'any.required': 'Scenario diperlukan!'
     })
   })
 

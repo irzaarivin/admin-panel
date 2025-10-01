@@ -22,6 +22,13 @@ module.exports = {
     mongo_pass: process.env.MONGO_PASS || 'irzaarivin',
     mongo_authSource: process.env.MONGO_AUTHSOURCE || 'admin',
 
+    // Minio
+    minio_region: process.env.MINIO_REGION || 'us-east-1',
+    minio_endpoint: process.env.MINIO_ENDPOINT || 'http://192.168.101.231:9000',
+    minio_access_key: process.env.MINIO_ACCESS_KEY || 'admin',
+    minio_secret_key: process.env.MINIO_SECRET_KEY || 'admin',
+    minio_bucket: process.env.MINIO_BUCKET || 'storage',
+
     // Redis
     redis_port: process.env.REDIS_PORT || 6379,
   },
