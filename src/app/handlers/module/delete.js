@@ -12,7 +12,7 @@ const validate = (data) => {
     return error;
 }
 
-const updateModule = async (repositories, helpers, id) => {
+module.exports = async (repositories, helpers, id) => {
     const { response } = helpers
     const { deleteOne, getOne } = repositories.moduleRepositories
 
@@ -27,5 +27,3 @@ const updateModule = async (repositories, helpers, id) => {
 
     return response.successNoContent()
 }
-
-module.exports = updateModule

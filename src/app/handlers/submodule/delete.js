@@ -12,20 +12,18 @@ const validate = (data) => {
     return error;
 }
 
-const updateModule = async (repositories, helpers, id) => {
+module.exports = async (repositories, helpers, id) => {
     const { response } = helpers
-    const { deleteOne, getOne } = repositories.moduleRepositories
+    const { deleteOne, getOne } = repositories.submoduleRepositories
 
     const validation = validate({ id });
     if(validation) return response.invalidData(validation.message);
 
     const moduleData = await getOne({ id })
-    if (!moduleData) return response.notFound('Module tidak ditemukan')
+    if (!moduleData) return response.notFound('Sub Module tidak ditemukan')
 
     const isDeleted = await deleteOne(id)
-    if (!isDeleted) return response.serverError('Gagal menghapus Module')
+    if (!isDeleted) return response.serverError('Gagal menghapus Sub Module')
 
     return response.successNoContent()
 }
-
-module.exports = updateModule

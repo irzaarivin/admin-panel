@@ -1,4 +1,4 @@
-module.exports = async ({ createContent, getContent, updateContent }) => {
+module.exports = async ({ createContent, getContent, updateContent, deleteContent }) => {
   const create = async (req, res, next) => {
     try {
       const result = await createContent(req.body)
@@ -29,5 +29,16 @@ module.exports = async ({ createContent, getContent, updateContent }) => {
     }
   }
 
-  return { create, get, update }
+  const remove = async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const result = await deleteContent(id)
+
+      res.status(result.statusCode).json(result.data)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  return { create, get, update, remove }
 }
