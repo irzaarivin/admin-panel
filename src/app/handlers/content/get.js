@@ -25,7 +25,7 @@ module.exports = async (repositories, helpers, data) => {
 
     return response.success(contents)
   } catch (error) {
-    console.error('❌ Error findAll content:', error)
+    console.error('Error findAll content:', error)
     throw Error(error)
   }
 }

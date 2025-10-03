@@ -1,6 +1,6 @@
 const { Op } = require('sequelize')
 
-module.exports = async ({ Submodule }) => {
+module.exports = async ({ Submodule, Module }) => {
     return {
         create: async (data) => {
             try {
@@ -33,7 +33,13 @@ module.exports = async ({ Submodule }) => {
 
                 if (params.title) where.title = { [Op.like]: `%${params.title}%` };
 
-                return Submodule.findAll({ where })
+                return Submodule.findAll({
+                    where,
+                    // include: [{
+                    //     model: Module,
+                    //     as: 'Module'
+                    // }]
+                })
             } catch (error) {
                 throw error
             }

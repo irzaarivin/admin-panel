@@ -3,15 +3,21 @@
 module.exports = async ({ sequelize, Sequelize, Model, DataTypes }) => {
   class Module extends Model {
     static associate(models) {
-      Module.hasMany(models.SubModule, {
+      Module.hasMany(models.Submodule, {
         foreignKey: 'module_id',
-        as: 'Subodule'
+        as: 'Submodule'
       });
     }
   }
+
   await Module.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     title: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
     }
@@ -21,5 +27,6 @@ module.exports = async ({ sequelize, Sequelize, Model, DataTypes }) => {
     tableName: 'modules',
     timestamps: true
   });
+
   return Module;
 };

@@ -2,12 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('submodules', {
+    await queryInterface.createTable('reports', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
       },
       module_id: {
         type: Sequelize.INTEGER,
@@ -15,11 +22,20 @@ module.exports = {
           model: 'modules',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
-      title: {
-        type: Sequelize.STRING
+      submodule_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'submodules',
+          key: 'id'
+        },
+      },
+      content_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      score: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -32,6 +48,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('submodules');
+    await queryInterface.dropTable('reports');
   }
 };

@@ -9,14 +9,33 @@ module.exports = async ({ sequelize, Sequelize, Model, DataTypes }) => {
       });
     }
   }
+
   await Submodule.init({
-    module_id: DataTypes.INTEGER,
-    title: DataTypes.STRING
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    module_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'modules',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Submodule',
     tableName: 'submodules',
     timestamps: true
   });
+
   return Submodule;
 };

@@ -20,7 +20,7 @@ const helpers = {
 const model = async ({ Sequelize, sequelize, Model, DataTypes, mongoose }) => {
     const User = require('./domain/models/User')
     const Module = require('./domain/models/Module')
-    const Submodule = require('./domain/models/submodule')
+    const Submodule = require('./domain/models/Submodule')
     const Content = require('./domain/models/Content')
 
     return {
